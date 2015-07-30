@@ -47,6 +47,7 @@ class Graph
       unless nodes_visited.include? name
         nodes_visited << name
         node = @nodes[name]
+        assert node
         stack << node.connections.to_a
         stack.flatten!
       end

@@ -3,6 +3,7 @@
 require 'set'
 require 'fail_fast'
 require 'parse_fasta'
+require 'parallel'
 require_relative 'graph'
 require_relative 'node'
 
@@ -29,13 +30,19 @@ end
 
 graph = Graph.new
 
+# NOW ITS ONE WAY
 # make each connection a two way connection
+n = 0
 connections.each do |source, target|
-  n1 = Node.new target, [source]
-  n2 = Node.new source, [target]
+  $stderr.puts n if (n % 10000).zero?
+  n1 = Node.new source, [target]
+  # add the target as a node with no connections
+  n2 = Node.new target, []
 
   graph.add n1
   graph.add n2
+
+  n += 1
 end
 
 visited = Set.new
@@ -43,7 +50,9 @@ not_visited = Set.new graph.node_names
 
 connected_sets = []
 while !not_visited.empty?
+  $stderr.puts not_visited.count
   a_node = not_visited.to_a.sample
+  assert a_node
   nodes = graph.df_search(a_node)
   assert nodes
   connected_sets << nodes
