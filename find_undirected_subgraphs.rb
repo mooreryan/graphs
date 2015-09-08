@@ -48,9 +48,12 @@ visited = Set.new
 not_visited = Set.new graph.node_names
 
 connected_sets = []
+iter = 1
 while !not_visited.empty?
-  $stderr.printf "Not visited: %d\r", not_visited.count
-  a_node = not_visited.to_a.sample
+  $stderr.printf "Iteration: %d\r", iter
+  iter += 1
+
+  a_node = not_visited.first
   assert a_node
   nodes = graph.df_search(a_node)
   assert nodes
@@ -62,7 +65,7 @@ while !not_visited.empty?
   # not_visited = not_visited - visited
 end
 
-$stderr.puts "Finished depth first search\n\n"
+$stderr.puts "Finished searching\n\n"
 
 connected_sets.each_with_index do |set, i|
   set.each do |name|
