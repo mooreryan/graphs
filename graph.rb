@@ -29,10 +29,11 @@ class Graph
   #
   # @param node [Node] the node to add
   def add node
-    if @nodes.has_key? node.name
-      @nodes[node.name].add_connections node.connections
+    name = node.name
+    if @nodes.has_key? name
+      @nodes[name].add_connections node.connections
     else
-      @nodes[node.name] = node
+      @nodes[name] = node
     end
   end
 
