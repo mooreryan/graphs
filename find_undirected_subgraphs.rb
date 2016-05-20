@@ -22,15 +22,18 @@ include FailFast::Assertions
 #   ['a', 'z']
 # ]
 
-connections = []
-ARGF.each_line do |line|
-  connections << line.chomp.split("\t")
-end
+# connections = []
+# ARGF.each_line do |line|
+#   connections << line.chomp.split("\t")
+# end
 
 graph = Graph.new
 
 n = 0
-connections.each do |source, target|
+# connections.each do |source, target|
+ARGF.each_line do |line|
+  source, target = line.chomp.split("\t")
+
   $stderr.printf("Connections: %d\r", n) if (n % 10000).zero?
   n1 = Node.new source, [target]
   n2 = Node.new target, [source]
