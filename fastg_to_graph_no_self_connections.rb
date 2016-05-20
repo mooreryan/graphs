@@ -2,8 +2,9 @@
 require 'parse_fasta'
 require 'fail_fast'
 include FailFast::Assertions
-
-FastaFile.open(ARGV.first).each_record do |head, seq|
+n=0
+FastaFile.open(ARGV.first).each_record_fast do |head, seq|
+  n+=1;STDERR.printf("%d\r", n) if (n%10_000).zero?
   # tildes mean something a bit more complicated in fastG
   abort "\n\nOH SNAP A TILDE\n\n" if head.match /~/
 

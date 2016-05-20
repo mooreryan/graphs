@@ -38,8 +38,7 @@ class Graph
 
   def df_search starting_name
     stack = []
-    nodes_visited = []
-    # nodes_visited: names of visited nodes
+    nodes_visited = Set.new
 
     name = starting_name
 
@@ -48,15 +47,14 @@ class Graph
         nodes_visited << name
         node = @nodes[name]
         assert node
-        stack << node.connections.to_a
-        stack.flatten!
+
+        node.connections.each do |node|
+          stack << node
+        end
       end
 
       name = stack.pop
       unless name
-        # $stderr.puts
-        # $stderr.puts starting_name
-        # $stderr.puts nodes_visited.join ' '
         assert nodes_visited
         return nodes_visited
       end

@@ -3,7 +3,6 @@
 require 'set'
 require 'fail_fast'
 require 'parse_fasta'
-require 'parallel'
 require_relative 'graph'
 require_relative 'node'
 
